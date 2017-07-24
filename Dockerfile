@@ -40,10 +40,6 @@ RUN set -ex; \
 	rm wordpress.tar.gz; \
 	chown -R www-data:www-data /usr/src/wordpress
 
-COPY docker-entrypoint.sh /usr/local/bin/
-
-
-
 COPY init_container.sh /bin/
 
 RUN apt-get update \
@@ -66,4 +62,5 @@ EXPOSE 2222
 
 EXPOSE 80
 
-CMD ["/bin/init_container.sh"]
+ENTRYPOINT ["/bin/init_container.sh"]
+CMD ["apache2-foreground"]
