@@ -49,12 +49,7 @@ RUN apt-get update \
 	&& chmod 755 /bin/init_container.sh \
 	&& echo "root:Docker!" | chpasswd 
 	
-RUN rm -fr /usr/local/tomcat/webapps \
-    && rm -fr /usr/local/tomcat/logs \
-
-    && ln -s /home/site/wwwroot /usr/local/tomcat/webapps \
-    && ln -s /home/LogFiles /usr/local/tomcat/logs \
-	&& chmod 777 /bin/init_container.sh 
+RUN chmod 777 /bin/init_container.sh 
 	
 COPY sshd_config /etc/ssh/
 
