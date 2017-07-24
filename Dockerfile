@@ -40,6 +40,10 @@ RUN set -ex; \
 	rm wordpress.tar.gz; \
 	chown -R www-data:www-data /usr/src/wordpress
 
+# Install wp-cli
+RUN curl -L https://github.com/wp-cli/wp-cli/releases/download/v0.24.1/wp-cli-0.24.1.phar -o /usr/local/bin/wp \
+&& chmod +x /usr/local/bin/wp
+
 COPY init_container.sh /bin/
 
 RUN apt-get update \
