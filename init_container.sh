@@ -4,11 +4,11 @@ service ssh start
 
 set -euo pipefail
 
-curl https://downloads.wordpress.org/plugin/windows-azure-storage.4.0.2.zip > wp-azure-storage.zip
-wp plugin install --activate wp-azure-storage.zip
+#curl https://downloads.wordpress.org/plugin/windows-azure-storage.4.0.2.zip > wp-azure-storage.zip
+#wp plugin install --activate wp-azure-storage.zip
 
-curl https://github.com/wp-cli/wp-super-cache-cli/archive/master.zip > wp-super-cache-cli.zip
-wp plugin install --activate wp-super-cache-cli.zip
+#curl https://github.com/wp-cli/wp-super-cache-cli/archive/master.zip > wp-super-cache-cli.zip
+#wp plugin install --activate wp-super-cache-cli.zip
 
 # usage: file_env VAR [DEFAULT]
 #    ie: file_env 'XYZ_DB_PASSWORD' 'example'
