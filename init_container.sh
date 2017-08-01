@@ -4,6 +4,8 @@ service ssh start
 
 set -euo pipefail
 
+#wp --allow-root --path=/var/www/html/ core install --url="$WORDPRESS_URL" --title="$WORDPRESS_TITLE" --admin_user="$WORDPRESS_ADMINUSER" --admin_password="$WORDPRESS_ADMINPASSWORD" --admin_email="$WORDPRESS_ADMINEMAIL"  
+
 #curl https://downloads.wordpress.org/plugin/windows-azure-storage.4.0.2.zip > wp-azure-storage.zip
 #wp plugin install --activate wp-azure-storage.zip
 
