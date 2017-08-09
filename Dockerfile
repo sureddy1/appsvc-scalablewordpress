@@ -14,11 +14,11 @@ RUN set -ex; \
 	docker-php-ext-install gd mysqli opcache
 # TODO consider removing the *-dev deps and only keeping the necessary lib* packages
 
-ENV WORDPRESS_TITLE
-ENV WORDPRESS_ADMINUSER
-ENV WORDPRESS_ADMINPASSWORD
-ENV WORDPRESS_URL
-ENV WORDPRESS_ADMINEMAIL
+#ENV WORDPRESS_TITLE
+#ENV WORDPRESS_ADMINUSER
+#ENV WORDPRESS_ADMINPASSWORD
+#ENV WORDPRESS_URL
+#ENV WORDPRESS_ADMINEMAIL
 
 # set recommended PHP.ini settings
 # see https://secure.php.net/manual/en/opcache.installation.php
