@@ -4,7 +4,13 @@ service ssh start
 
 set -euo pipefail
 
-#wp --allow-root --path=/var/www/html/ core install --url="$WORDPRESS_URL" --title="$WORDPRESS_TITLE" --admin_user="$WORDPRESS_ADMINUSER" --admin_password="$WORDPRESS_ADMINPASSWORD" --admin_email="$WORDPRESS_ADMINEMAIL"  
+echo "$WORDPRESS_ADMINEMAIL"
+echo "$WORDPRESS_URL"
+echo "$WORDPRESS_TITLE"
+echo "$WORDPRESS_ADMINUSER"
+echo "$WORDPRESS_ADMINPASSWORD"
+
+wp --allow-root --path=/var/www/html/ core install --url="$WORDPRESS_URL" --title="$WORDPRESS_TITLE" --admin_user="$WORDPRESS_ADMINUSER" --admin_password="$WORDPRESS_ADMINPASSWORD" --admin_email="$WORDPRESS_ADMINEMAIL"
 
 #curl https://downloads.wordpress.org/plugin/windows-azure-storage.4.0.2.zip > wp-azure-storage.zip
 #wp plugin install --activate wp-azure-storage.zip
@@ -16,6 +22,7 @@ set -euo pipefail
 #    ie: file_env 'XYZ_DB_PASSWORD' 'example'
 # (will allow for "$XYZ_DB_PASSWORD_FILE" to fill in the value of
 #  "$XYZ_DB_PASSWORD" from a file, especially for Docker's secrets feature)
+
 file_env() {
 	local var="$1"
 	local fileVar="${var}_FILE"
