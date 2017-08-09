@@ -10,11 +10,7 @@ echo >&2 "WP Core Env Variable $WORDPRESS_TITLE"
 echo >&2 "WP Core Env Variable $WORDPRESS_ADMINUSER"
 echo >&2 "WP Core Env Variable $WORDPRESS_ADMINPASSWORD"
 
-#curl https://downloads.wordpress.org/plugin/windows-azure-storage.4.0.2.zip > wp-azure-storage.zip
-#wp plugin install --activate wp-azure-storage.zip
 
-#curl https://github.com/wp-cli/wp-super-cache-cli/archive/master.zip > wp-super-cache-cli.zip
-#wp plugin install --activate wp-super-cache-cli.zip
 
 # usage: file_env VAR [DEFAULT]
 #    ie: file_env 'XYZ_DB_PASSWORD' 'example'
@@ -225,9 +221,20 @@ EOPHP
 	if ! $(wp --allow-root --path=/var/www/html/ is-installed); then
 		echo >&2 "WP Core is not installed. Installing WP Core"
 		wp --allow-root --path=/var/www/html/ core install --url="$WORDPRESS_URL" --title="$WORDPRESS_TITLE" --admin_user="$WORDPRESS_ADMINUSER" --admin_password="$WORDPRESS_ADMINPASSWORD" --admin_email="$WORDPRESS_ADMINEMAIL"
+		echo >&2 "WP Core installed successfully"
 	fi
 	
+	if ! $(wp --allow-root --path=/var/www/html/ plugin is-installed wp-azure-storage); then
+		echo >&2 "WP Azure Storage Plugin is not installed. Installing it"
+		curl https://downloads.wordpress.org/plugin/windows-azure-storage.4.0.2.zip > wp-azure-storage.zip
+		wp --allow-root --path=/var/www/html/ plugin install --activate wp-azure-storage.zip	
+	fi
+	
+	#curl https://github.com/wp-cli/wp-super-cache-cli/archive/master.zip > wp-super-cache-cli.zip
+	#wp plugin install --activate wp-super-cache-cli.zip
+	
 	# now that we're definitely done writing configuration, let's clear out the relevant envrionment variables (so that stray "phpinfo()" calls don't leak secrets from our code)
+	
 	for e in "${envs[@]}"; do
 		unset "$e"
 	done
