@@ -4,13 +4,11 @@ service ssh start
 
 set -euo pipefail
 
-echo "$WORDPRESS_ADMINEMAIL"
-echo "$WORDPRESS_URL"
-echo "$WORDPRESS_TITLE"
-echo "$WORDPRESS_ADMINUSER"
-echo "$WORDPRESS_ADMINPASSWORD"
-
-wp --allow-root --path=/var/www/html/ core install --url="$WORDPRESS_URL" --title="$WORDPRESS_TITLE" --admin_user="$WORDPRESS_ADMINUSER" --admin_password="$WORDPRESS_ADMINPASSWORD" --admin_email="$WORDPRESS_ADMINEMAIL"
+echo >&2 "WP Core Env Variable $WORDPRESS_ADMINEMAIL"
+echo >&2 "WP Core Env Variable $WORDPRESS_URL"
+echo >&2 "WP Core Env Variable $WORDPRESS_TITLE"
+echo >&2 "WP Core Env Variable $WORDPRESS_ADMINUSER"
+echo >&2 "WP Core Env Variable $WORDPRESS_ADMINPASSWORD"
 
 #curl https://downloads.wordpress.org/plugin/windows-azure-storage.4.0.2.zip > wp-azure-storage.zip
 #wp plugin install --activate wp-azure-storage.zip
@@ -67,6 +65,8 @@ if [[ "$1" == apache2* ]] || [ "$1" == php-fpm ]; then
 			chown www-data:www-data .htaccess
 		fi
 	fi
+	
+	
 
 	# TODO handle WordPress upgrades magically in the same way, but only if wp-includes/version.php's $wp_version is less than /usr/src/wordpress/wp-includes/version.php's $wp_version
 
@@ -222,6 +222,11 @@ $mysql->close();
 EOPHP
 	fi
 
+	if ! $(wp --allow-root --path=/var/www/html/ is-installed); then
+		echo >&2 "WP Core is not installed. Installing WP Core"
+		wp --allow-root --path=/var/www/html/ core install --url="$WORDPRESS_URL" --title="$WORDPRESS_TITLE" --admin_user="$WORDPRESS_ADMINUSER" --admin_password="$WORDPRESS_ADMINPASSWORD" --admin_email="$WORDPRESS_ADMINEMAIL"
+	fi
+	
 	# now that we're definitely done writing configuration, let's clear out the relevant envrionment variables (so that stray "phpinfo()" calls don't leak secrets from our code)
 	for e in "${envs[@]}"; do
 		unset "$e"
