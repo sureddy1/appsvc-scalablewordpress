@@ -224,10 +224,10 @@ EOPHP
 		echo >&2 "WP Core installed successfully"
 	fi
 	
-	if ! $(wp --allow-root --path=/var/www/html/ plugin is-installed wp-azure-storage); then
-		echo >&2 "WP Azure Storage Plugin is not installed. Installing it"		
-		wp --allow-root --path=/var/www/html/ plugin install --activate /tmp/wp-azure-storage.zip	
-	fi
+	#if ! $(wp --allow-root --path=/var/www/html/ plugin is-installed wp-azure-storage); then
+	#	echo >&2 "WP Azure Storage Plugin is not installed. Installing it"		
+	#	wp --allow-root --path=/var/www/html/ plugin install --activate /tmp/wp-azure-storage.zip	
+	#fi
 	
 	#curl https://github.com/wp-cli/wp-super-cache-cli/archive/master.zip > wp-super-cache-cli.zip
 	#wp plugin install --activate wp-super-cache-cli.zip
