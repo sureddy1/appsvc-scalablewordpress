@@ -50,6 +50,9 @@ RUN set -ex; \
 RUN curl -L https://github.com/wp-cli/wp-cli/releases/download/v0.24.1/wp-cli-0.24.1.phar -o /usr/local/bin/wp \
 && chmod +x /usr/local/bin/wp
 
+# Download WP-Azure-Storage
+RUN curl -L https://downloads.wordpress.org/plugin/windows-azure-storage.4.0.2.zip -o /tmp/wp-azure-storage.zip
+
 COPY init_container.sh /bin/
 
 RUN apt-get update \
