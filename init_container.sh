@@ -11,6 +11,31 @@ echo >&2 "WP Core Env Variable $WORDPRESS_ADMINUSER"
 echo >&2 "WP Core Env Variable $WORDPRESS_ADMINPASSWORD"
 
 
+if [ ! -d "/home/LogFiles/apache2" ]; then
+	echo >&2 "Info: Apache Logs directory is not available. Creating one"
+	mkdir -p /home/LogFiles/apache2
+	cp -R /var/log/apache2/. /home/LogFiles/apache2/
+else
+	echo >&2 "Info: Apache Logs directory already exists"
+fi
+
+rm -rf /var/log/apache2
+ln -s /home/LogFiles/apache2 /var/log/apache2
+chown -R www-data:www-data /home/LogFiles/apache2
+
+
+if [ ! -d "/home/site/html" ]; then
+	echo >&2 "Info: Apache Root directory is not available. Creating one"
+	mkdir -p /home/site/html
+	cp -R /var/www/html/. /home/site/html/	
+else
+	echo >&2 "Info: Apache Root directory already exists"
+fi
+
+rm -rf /var/www/html
+ln -s /home/site/html /var/www/html
+chown -R www-data:www-data /home/site/html
+
 
 # usage: file_env VAR [DEFAULT]
 #    ie: file_env 'XYZ_DB_PASSWORD' 'example'
@@ -218,16 +243,18 @@ $mysql->close();
 EOPHP
 	fi
 
-	if ! $(wp --allow-root --path=/var/www/html/ is-installed); then
+	if ! $(wp core --allow-root --path=/var/www/html/ is-installed); then
 		echo >&2 "WP Core is not installed. Installing WP Core"
 		wp --allow-root --path=/var/www/html/ core install --url="$WORDPRESS_URL" --title="$WORDPRESS_TITLE" --admin_user="$WORDPRESS_ADMINUSER" --admin_password="$WORDPRESS_ADMINPASSWORD" --admin_email="$WORDPRESS_ADMINEMAIL"
 		echo >&2 "WP Core installed successfully"
 	fi
 	
-	#if ! $(wp --allow-root --path=/var/www/html/ plugin is-installed wp-azure-storage); then
-	#	echo >&2 "WP Azure Storage Plugin is not installed. Installing it"		
-	#	wp --allow-root --path=/var/www/html/ plugin install --activate /tmp/wp-azure-storage.zip	
-	#fi
+	if ! $(wp plugin --allow-root --path=/var/www/html/  is-installed windows-azure-storage); then
+		echo >&2 "WP Azure Storage Plugin is not installed. Installing it"		
+		wp --allow-root --path=/var/www/html/ plugin install --activate /tmp/wp-azure-storage.zip	
+	fi
+	
+	chown -R www-data:www-data /home/site/html
 	
 	#curl https://github.com/wp-cli/wp-super-cache-cli/archive/master.zip > wp-super-cache-cli.zip
 	#wp plugin install --activate wp-super-cache-cli.zip
