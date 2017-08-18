@@ -11,17 +11,17 @@ echo >&2 "WP Core Env Variable $WORDPRESS_ADMINUSER"
 echo >&2 "WP Core Env Variable $WORDPRESS_ADMINPASSWORD"
 
 
-if [ ! -d "/home/LogFiles/apache2" ]; then
-	echo >&2 "Info: Apache Logs directory is not available. Creating one"
-	mkdir -p /home/LogFiles/apache2
-	cp -R /var/log/apache2/. /home/LogFiles/apache2/
-else
-	echo >&2 "Info: Apache Logs directory already exists"
-fi
+#if [ ! -d "/home/LogFiles/apache2" ]; then
+#	echo >&2 "Info: Apache Logs directory is not available. Creating one"
+#	mkdir -p /home/LogFiles/apache2
+#	cp -R /var/log/apache2/. /home/LogFiles/apache2/
+#else
+#	echo >&2 "Info: Apache Logs directory already exists"
+#fi
 
-rm -rf /var/log/apache2
-ln -s /home/LogFiles/apache2 /var/log/apache2
-chown -R www-data:www-data /home/LogFiles/apache2
+#rm -rf /var/log/apache2
+#ln -s /home/LogFiles/apache2 /var/log/apache2
+#chown -R www-data:www-data /home/LogFiles/apache2
 
 
 if [ ! -d "/home/site/html" ]; then
