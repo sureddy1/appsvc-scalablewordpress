@@ -254,7 +254,7 @@ EOPHP
 		wp --allow-root --path=/var/www/html/ plugin install --activate /tmp/wp-azure-storage.zip	
 	fi
 	
-	chown -R www-data:www-data /home/site/html
+	chown -R www-data:www-data /var/www/html
 	
 	#curl https://github.com/wp-cli/wp-super-cache-cli/archive/master.zip > wp-super-cache-cli.zip
 	#wp plugin install --activate wp-super-cache-cli.zip
