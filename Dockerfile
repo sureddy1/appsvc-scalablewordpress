@@ -61,7 +61,15 @@ RUN apt-get update \
 	&& apt install -y vim \
 	&& chmod 755 /bin/init_container.sh \
 	&& echo "root:Docker!" | chpasswd 
-	
+
+RUN rm -fr /var/www/html \
+    && rm -fr /var/log/apache2 \
+    && mkdir -p /home/LogFiles/apache2 \
+    && mkdir -p /home/site/html \
+    && ln -s /home/site/html /var/www/html \
+    && ln -s /home/LogFiles/apache2 /var/log/apache2 \
+	&& chmod 777 /bin/init_container.sh
+
 RUN chmod 777 /bin/init_container.sh 
 	
 COPY sshd_config /etc/ssh/
