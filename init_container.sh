@@ -32,7 +32,7 @@ else
 	echo >&2 "Info: Apache Root directory already exists"
 fi
 
-rm -rf /var/www/html
+#rm -rf /var/www/html
 ln -s /home/site/html /var/www/html
 chown -R www-data:www-data /home/site/html
 
