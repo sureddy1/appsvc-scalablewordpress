@@ -33,8 +33,10 @@ else
 fi
 
 #rm -rf /var/www/html
-ln -s /home/site/html /var/www/html
-chown -R www-data:www-data /home/site/html
+#cd /var/www
+#rm -fr html
+#ln -s /home/site/html html
+#chown -R www-data:www-data /home/site/html
 
 
 # usage: file_env VAR [DEFAULT]
