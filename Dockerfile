@@ -33,7 +33,7 @@ RUN { \
 
 RUN a2enmod rewrite expires
 
-VOLUME /var/www/html
+#VOLUME /var/www/html
 
 ENV WORDPRESS_VERSION 4.8
 ENV WORDPRESS_SHA1 3738189a1f37a03fb9cb087160b457d7a641ccb4
@@ -61,7 +61,14 @@ RUN apt-get update \
 	&& apt install -y vim \
 	&& chmod 755 /bin/init_container.sh \
 	&& echo "root:Docker!" | chpasswd 
-	
+
+RUN rm -fr /var/log/apache2 \
+    && mkdir -p /home/LogFiles/apache2 \
+    && mkdir -p /home/site/html \
+    && ln -s /home/site/html /var/www/html \
+    && ln -s /home/LogFiles/apache2 /var/log/apache2 \
+	&& chmod 777 /bin/init_container.sh
+
 RUN chmod 777 /bin/init_container.sh 
 	
 COPY sshd_config /etc/ssh/

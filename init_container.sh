@@ -11,17 +11,17 @@ echo >&2 "WP Core Env Variable $WORDPRESS_ADMINUSER"
 echo >&2 "WP Core Env Variable $WORDPRESS_ADMINPASSWORD"
 
 
-if [ ! -d "/home/LogFiles/apache2" ]; then
-	echo >&2 "Info: Apache Logs directory is not available. Creating one"
-	mkdir -p /home/LogFiles/apache2
-	cp -R /var/log/apache2/. /home/LogFiles/apache2/
-else
-	echo >&2 "Info: Apache Logs directory already exists"
-fi
+#if [ ! -d "/home/LogFiles/apache2" ]; then
+#	echo >&2 "Info: Apache Logs directory is not available. Creating one"
+#	mkdir -p /home/LogFiles/apache2
+#	cp -R /var/log/apache2/. /home/LogFiles/apache2/
+#else
+#	echo >&2 "Info: Apache Logs directory already exists"
+#fi
 
-rm -rf /var/log/apache2
-ln -s /home/LogFiles/apache2 /var/log/apache2
-chown -R www-data:www-data /home/LogFiles/apache2
+#rm -rf /var/log/apache2
+#ln -s /home/LogFiles/apache2 /var/log/apache2
+#chown -R www-data:www-data /home/LogFiles/apache2
 
 
 if [ ! -d "/home/site/html" ]; then
@@ -32,7 +32,7 @@ else
 	echo >&2 "Info: Apache Root directory already exists"
 fi
 
-rm -rf /var/www/html
+#rm -rf /var/www/html
 ln -s /home/site/html /var/www/html
 chown -R www-data:www-data /home/site/html
 
@@ -254,7 +254,7 @@ EOPHP
 		wp --allow-root --path=/var/www/html/ plugin install --activate /tmp/wp-azure-storage.zip	
 	fi
 	
-	chown -R www-data:www-data /home/site/html
+	chown -R www-data:www-data /var/www/html
 	
 	#curl https://github.com/wp-cli/wp-super-cache-cli/archive/master.zip > wp-super-cache-cli.zip
 	#wp plugin install --activate wp-super-cache-cli.zip
