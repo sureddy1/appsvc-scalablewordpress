@@ -255,8 +255,9 @@ EOPHP
 		if [ ! -d "/home/site/html/wp-content/plugins/windows-azure-storage" ]; then
 			echo >&2 "WP Azure Storage Plugin is not installed. Installing it"		
 			wp --allow-root --path=/var/www/html/ plugin install --activate /tmp/wp-azure-storage.zip
-			wp db query 'insert into wp_options values (0,"azure_storage_account_name",'"$StorageAccountBlobUrl"',"yes")' --allow-root
-			wp db query 'insert into wp_options values (0,"azure_storage_account_primary_access_key",'"$StorageAccountKey"',"yes")' --allow-root
+			echo >&2 'insert into wp_options value (0,"
+			wp db query 'insert into wp_options values (0,"azure_storage_account_name","'"$StorageAccountName"'","yes")' --allow-root
+			wp db query 'insert into wp_options values (0,"azure_storage_account_primary_access_key","'"$StorageAccountKey"'","yes")' --allow-root
 			wp windows-azure-storage container-create wpstorage --allow-root
 			wp db query 'insert into wp_options values (0,"default_azure_storage_account_container_name","wpstorage","yes")' --allow-root
 			wp db query 'insert into wp_options values (0,"azure_storage_use_for_default_upload","1","yes")' --allow-root
