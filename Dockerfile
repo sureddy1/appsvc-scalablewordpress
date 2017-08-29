@@ -59,7 +59,7 @@ RUN apt-get update \
 	&& apt install -y --no-install-recommends \
 		openssh-server \
 	&& apt install -y vim \
-	&& apt install mysql-client \
+	&& apt install -y mysql-client \
 	&& chmod 755 /bin/init_container.sh \
 	&& echo "root:Docker!" | chpasswd 
 
