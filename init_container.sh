@@ -252,7 +252,7 @@ EOPHP
 	fi
 	
 	if ! $(wp plugin --allow-root --path=/var/www/html/  is-installed windows-azure-storage); then
-		if [! -d "/home/site/html/wp-content/plugins/windows-azure-storage"]; then
+		if [ ! -d "/home/site/html/wp-content/plugins/windows-azure-storage" ]; then
 			echo >&2 "WP Azure Storage Plugin is not installed. Installing it"		
 			wp --allow-root --path=/var/www/html/ plugin install --activate /tmp/wp-azure-storage.zip
 			wp plugin --activate windows-azure-storage --allow-root
