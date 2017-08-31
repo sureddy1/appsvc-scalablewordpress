@@ -33,7 +33,7 @@ RUN { \
 
 RUN a2enmod rewrite expires
 
-VOLUME /home/site/html
+#VOLUME /home/site/wwwroot
 
 ENV WORDPRESS_VERSION 4.8
 ENV WORDPRESS_SHA1 3738189a1f37a03fb9cb087160b457d7a641ccb4
@@ -63,22 +63,31 @@ RUN apt-get update \
 	&& chmod 755 /bin/init_container.sh \
 	&& echo "root:Docker!" | chpasswd 
 
-RUN rm -fr /var/log/apache2 \
-    && mkdir -p /home/LogFiles/apache2 \
-    && mkdir -p /home/site/html \
-    && cd /var/www \
-	&& rm -fr html \
-	&& ln -s /home/site/html html \
-    && ln -s /home/LogFiles/apache2 /var/log/apache2 \
-	&& chmod 777 /bin/init_container.sh
 
-RUN chmod 777 /bin/init_container.sh 
+RUN   \
+   rm -f /var/log/apache2/* \
+   && rmdir /var/lock/apache2 \
+   && rmdir /var/run/apache2 \
+   && rmdir /var/log/apache2 \
+   && chmod 777 /var/log \
+   && chmod 777 /var/run \
+   && chmod 777 /var/lock \
+   && chmod 777 /bin/init_container.sh \
+   && rm -rf /var/www/html \
+   && rm -rf /var/log/apache2 \
+   && mkdir -p /home/LogFiles \
+   && ln -s /home/site/wwwroot /var/www/html \
+   && ln -s /home/LogFiles /var/log/apache2
 	
 COPY sshd_config /etc/ssh/
 
 EXPOSE 2222	
 
 EXPOSE 80
+
+ENV PATH ${PATH}:/home/site/wwwroot
+
+WORKDIR /var/www/html
 
 ENTRYPOINT ["/bin/init_container.sh"]
 CMD ["apache2-foreground"]
