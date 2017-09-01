@@ -217,9 +217,11 @@ EOPHP
 	fi
 
 	if ! $(wp core --allow-root --path=/var/www/html/ is-installed); then
-		echo >&2 "WP Core is not installed. Installing WP Core"
-		wp --allow-root --path=/var/www/html/ core install --url="$WORDPRESS_URL" --title="$WORDPRESS_TITLE" --admin_user="$WORDPRESS_ADMINUSER" --admin_password="$WORDPRESS_ADMINPASSWORD" --admin_email="$WORDPRESS_ADMINEMAIL"
-		echo >&2 "WP Core installed successfully"
+		if [ ! d "/home/site/wwwroot/wp-content" ]; then
+			echo >&2 "WP Core is not installed. Installing WP Core"
+			wp --allow-root --path=/var/www/html/ core install --url="$WORDPRESS_URL" --title="$WORDPRESS_TITLE" --admin_user="$WORDPRESS_ADMINUSER" --admin_password="$WORDPRESS_ADMINPASSWORD" --admin_email="$WORDPRESS_ADMINEMAIL"
+			echo >&2 "WP Core installed successfully"
+		fi
 	fi
 	
 	if ! $(wp plugin --allow-root --path=/var/www/html/  is-installed windows-azure-storage); then
