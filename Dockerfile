@@ -73,10 +73,10 @@ RUN   \
    && chmod 777 /var/run \
    && chmod 777 /var/lock \
    && chmod 777 /bin/init_container.sh \
-   && rm -rf /var/www/html \
+   && rm -rf /var/www/html/wp-content \
    && rm -rf /var/log/apache2 \
    && mkdir -p /home/LogFiles \
-   && ln -s /home/site/wwwroot /var/www/html \
+   && ln -s /home/site/wwwroot /var/www/html/wp-content \
    && ln -s /home/LogFiles /var/log/apache2
 	
 COPY sshd_config /etc/ssh/
@@ -85,7 +85,7 @@ EXPOSE 2222
 
 EXPOSE 80
 
-ENV PATH ${PATH}:/home/site/wwwroot
+#ENV PATH ${PATH}:/home/site/wwwroot
 
 WORKDIR /var/www/html
 

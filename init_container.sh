@@ -229,19 +229,19 @@ EOPHP
 			echo >&2 "WP Azure Storage Plugin is not installed. Installing it"		
 			wp --allow-root --path=/var/www/html/ plugin install --activate /tmp/wp-azure-storage.zip
 			echo >&2 "Adding Storage Account Name"
-			wp db query 'insert into wp_options values (0,"azure_storage_account_name","'"$StorageAccountName"'","yes")' --allow-root
+			wp db query 'insert into wp_options values (0,"azure_storage_account_name","'"$StorageAccountName"'","yes")' --allow-root --path=/var/www/html/
 			echo >&2 "Adding Storage Account Key"
-			wp db query 'insert into wp_options values (0,"azure_storage_account_primary_access_key","'"$StorageAccountKey"'","yes")' --allow-root
+			wp db query 'insert into wp_options values (0,"azure_storage_account_primary_access_key","'"$StorageAccountKey"'","yes")' --allow-root --path=/var/www/html/
 			echo >&2 "Creating a Container"
-			wp windows-azure-storage container-create wpstorage --allow-root
+			wp windows-azure-storage container-create wpstorage --allow-root --path=/var/www/html/
 			echo >&2 "Adding Storage Account Container Name"
-			wp db query 'insert into wp_options values (0,"default_azure_storage_account_container_name","wpstorage","yes")' --allow-root
+			wp db query 'insert into wp_options values (0,"default_azure_storage_account_container_name","wpstorage","yes")' --allow-root --path=/var/www/html/
 			echo >&2 "Adding use for default"
-			wp db query 'insert into wp_options values (0,"azure_storage_use_for_default_upload","1","yes")' --allow-root
+			wp db query 'insert into wp_options values (0,"azure_storage_use_for_default_upload","1","yes")' --allow-root --path=/var/www/html/
 			echo >&2 "Adding cache results"
-			wp db query 'insert into wp_options values (0,"azure_browser_cache_results","15","yes")' --allow-root
+			wp db query 'insert into wp_options values (0,"azure_browser_cache_results","15","yes")' --allow-root --path=/var/www/html/
 			echo >&2 "Adding cname"
-			wp db query 'insert into wp_options values (0,"cname","","yes")' --allow-root			
+			wp db query 'insert into wp_options values (0,"cname","","yes")' --allow-root --path=/var/www/html/			
 		fi
 	#fi
 	
