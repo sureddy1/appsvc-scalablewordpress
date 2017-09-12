@@ -11,11 +11,15 @@ echo >&2 "WP Core Env Variable $WORDPRESS_ADMINUSER"
 echo >&2 "WP Core Env Variable $WORDPRESS_ADMINPASSWORD"
 
 if [ ! -d "/home/site/wwwroot/wp-content" ]; then
-	echo "Info: WP is not installed yet. Creating one"
+	echo "Info: WP not yet persisted. persisting now"
 	mkdir -p /home/site/wwwroot/wp-content
+	cp -R /var/www/html/wp-content/. /home/site/wwwroot/wp-content/
+	rm -fr /var/www/html/wp-content
 	ln -s /home/site/wwwroot/wp-content /var/www/html/wp-content
 else
-	echo "Info: WP is installed already"
+	echo "Info: WP persisted. Linking back now"
+	rm -fr /var/www/html/wp-content
+	ln -s /home/site/wwwroot/wp-content /var/www/html/wp-content
 fi
 
 # usage: file_env VAR [DEFAULT]
@@ -50,6 +54,8 @@ if [[ "$1" == apache2* ]] || [ "$1" == php-fpm ]; then
 		fi
 		tar cf - --one-file-system -C /usr/src/wordpress . | tar xf -
 		echo >&2 "Complete! WordPress has been successfully copied to $PWD"
+	fi
+	
 		if [ ! -e .htaccess ]; then
 			# NOTE: The "Indexes" option is disabled in the php:apache base image
 			cat > .htaccess <<-'EOF'
@@ -66,7 +72,7 @@ if [[ "$1" == apache2* ]] || [ "$1" == php-fpm ]; then
 			EOF
 			chown www-data:www-data .htaccess
 		fi
-	fi
+	
 	
 	
 
