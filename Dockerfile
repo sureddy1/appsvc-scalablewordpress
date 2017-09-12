@@ -42,8 +42,9 @@ RUN set -ex; \
 	curl -o wordpress.tar.gz -fSL "https://wordpress.org/wordpress-${WORDPRESS_VERSION}.tar.gz"; \
 	echo "$WORDPRESS_SHA1 *wordpress.tar.gz" | sha1sum -c -; \
 # upstream tarballs include ./wordpress/ so this gives us /usr/src/wordpress
-	tar -xzf wordpress.tar.gz -C /var/www/html/; \
+	tar -xzf wordpress.tar.gz -C /usr/src/; \
 	rm wordpress.tar.gz; \
+	tar cf - --one-file-system -C /usr/src/wordpress /var/www/html/. | tar xf - \
 	chown -R www-data:www-data /var/www/html
 
 # Install wp-cli
