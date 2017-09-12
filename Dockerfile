@@ -42,9 +42,9 @@ RUN set -ex; \
 	curl -o wordpress.tar.gz -fSL "https://wordpress.org/wordpress-${WORDPRESS_VERSION}.tar.gz"; \
 	echo "$WORDPRESS_SHA1 *wordpress.tar.gz" | sha1sum -c -; \
 # upstream tarballs include ./wordpress/ so this gives us /usr/src/wordpress
-	tar -xzf wordpress.tar.gz -C /usr/src/; \
+	tar -xzf wordpress.tar.gz -C /var/www/html/; \
 	rm wordpress.tar.gz; \
-	chown -R www-data:www-data /usr/src/wordpress
+	chown -R www-data:www-data /var/www/html
 
 # Install wp-cli
 RUN curl -L https://github.com/wp-cli/wp-cli/releases/download/v0.24.1/wp-cli-0.24.1.phar -o /usr/local/bin/wp \
@@ -73,7 +73,6 @@ RUN   \
    && chmod 777 /var/run \
    && chmod 777 /var/lock \
    && chmod 777 /bin/init_container.sh \
-   && rm -rf /var/www/html/wp-content \
    && rm -rf /var/log/apache2 \
    && mkdir -p /home/LogFiles \   
    && ln -s /home/LogFiles /var/log/apache2
