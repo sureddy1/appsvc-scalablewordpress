@@ -10,6 +10,14 @@ echo >&2 "WP Core Env Variable $WORDPRESS_TITLE"
 echo >&2 "WP Core Env Variable $WORDPRESS_ADMINUSER"
 echo >&2 "WP Core Env Variable $WORDPRESS_ADMINPASSWORD"
 
+if [ ! -d "/home/site/wwwroot/wp-content" ]; then
+	echo "Info: WP is not installed yet. Creating one"
+	mkdir -p /home/site/wwwroot/wp-content
+	ln -s /home/site/wwwroot/wp-content /var/www/html/wp-content
+else
+	echo "Info: WP is installed already"
+fi
+
 # usage: file_env VAR [DEFAULT]
 #    ie: file_env 'XYZ_DB_PASSWORD' 'example'
 # (will allow for "$XYZ_DB_PASSWORD_FILE" to fill in the value of

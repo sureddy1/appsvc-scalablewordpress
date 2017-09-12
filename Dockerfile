@@ -75,8 +75,7 @@ RUN   \
    && chmod 777 /bin/init_container.sh \
    && rm -rf /var/www/html/wp-content \
    && rm -rf /var/log/apache2 \
-   && mkdir -p /home/LogFiles \
-   && ln -s /home/site/wwwroot /var/www/html/wp-content \
+   && mkdir -p /home/LogFiles \   
    && ln -s /home/LogFiles /var/log/apache2
 	
 COPY sshd_config /etc/ssh/
