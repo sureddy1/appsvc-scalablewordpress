@@ -44,7 +44,7 @@ RUN set -ex; \
 # upstream tarballs include ./wordpress/ so this gives us /usr/src/wordpress
 	tar -xzf wordpress.tar.gz -C /usr/src/; \
 	rm wordpress.tar.gz; \
-	tar cf - --one-file-system -C /usr/src/wordpress /var/www/html/. | tar xf -; \
+	cp -r /usr/src/wordpress/. /var/www/html/; \
 	chown -R www-data:www-data /var/www/html
 
 # Install wp-cli
